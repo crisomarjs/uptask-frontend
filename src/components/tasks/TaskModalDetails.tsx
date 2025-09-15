@@ -18,41 +18,41 @@ export default function TaskModalDetails() {
     const taskId = queryParams.get('viewTask')!
     const show = taskId ? true : false
 
-    const {data, isError, error} = useQuery({
+    const { data, isError, error } = useQuery({
         queryKey: ['task', taskId],
-        queryFn: () => getTaskById({projectId, taskId}),
+        queryFn: () => getTaskById({ projectId, taskId }),
         enabled: !!taskId,
         retry: false
     })
 
     const queryClient = useQueryClient()
-    const {mutate} = useMutation({
+    const { mutate } = useMutation({
         mutationFn: updateStatus,
         onError: (error) => {
             toast.error(error.message)
         },
         onSuccess: (data) => {
             toast.success(data)
-            queryClient.invalidateQueries({queryKey: ['project', projectId]})
-            queryClient.invalidateQueries({queryKey: ['task', taskId]})
+            queryClient.invalidateQueries({ queryKey: ['project', projectId] })
+            queryClient.invalidateQueries({ queryKey: ['task', taskId] })
         }
     })
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const status = e.target.value as TaskStatus
-        const data = {projectId, taskId, status}
+        const data = { projectId, taskId, status }
         mutate(data)
     }
 
-    if(isError){
-        toast.error(error.message, {toastId: 'error'})
+    if (isError) {
+        toast.error(error.message, { toastId: 'error' })
         return <Navigate to={`/projects/${projectId}`} />
     }
-  
-    if(data) return (
+
+    if (data) return (
         <>
             <Transition appear show={show} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => navigate(locarion.pathname, {replace: true})}>
+                <Dialog as="div" className="relative z-10" onClose={() => navigate(locarion.pathname, { replace: true })}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -85,6 +85,20 @@ export default function TaskModalDetails() {
                                     >{data.name}
                                     </Dialog.Title>
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
+
+                                    <p className='text-2xl text-slate-500 mb-2'>Historial de Cambios</p>
+
+                                    <ul className='list-decimal'>
+                                        {data.completedBy.map((activityLog) => (
+                                            <li key={activityLog._id}>
+                                                <span className='font-bold text-slate-600'>
+                                                    {statusTranslations[activityLog.status]}
+                                                </span>{' '} por: {activityLog.user.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+
+
                                     <div className='my-5 space-y-3'>
                                         <label className='font-bold'>Estado Actual:</label>
                                         <select
