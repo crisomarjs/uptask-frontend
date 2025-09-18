@@ -61,3 +61,9 @@ src/
  ├── router.tsx
  └── main.tsx
 ````
+
+---
+## 🔗 Repositorios
+
+- [Frontend](https://github.com/crisomarjs/uptask-frontend)
+- [Backend](https://github.com/crisomarjs/backend-uptask)
