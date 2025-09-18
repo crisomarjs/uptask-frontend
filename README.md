@@ -7,11 +7,11 @@ Se conecta a una API backend para la gestión de proyectos, tareas, notas y perf
 
 ## 🚀 Tecnologías utilizadas
 
-- [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [React Router](https://reactrouter.com/)
-- [TailwindCSS](https://tailwindcss.com/) 
-- [Axios](https://axios-http.com/) (para peticiones HTTP)
+- React + Vite
+- TypeScript
+- React Router
+- TailwindCSS
+- Axios
 
 ---
 
